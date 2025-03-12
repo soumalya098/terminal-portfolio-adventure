@@ -61,8 +61,8 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-medium text-white">Email</h3>
-                  <a href="mailto:example@portfolio.com" className="text-white/70 hover:text-portfolio-accent transition-colors">
-                    example@portfolio.com
+                  <a href="mailto:ambrose.linux+coder@gmail.com" className="text-white/70 hover:text-portfolio-accent transition-colors">
+                    ambrose.linux+coder@gmail.com
                   </a>
                 </div>
               </div>
@@ -73,8 +73,8 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-medium text-white">Phone</h3>
-                  <a href="tel:+11234567890" className="text-white/70 hover:text-portfolio-accent transition-colors">
-                    +1 (123) 456-7890
+                  <a href="tel:+91**********" className="text-white/70 hover:text-portfolio-accent transition-colors">
+                    +91 *********
                   </a>
                 </div>
               </div>
@@ -86,7 +86,7 @@ const Contact: React.FC = () => {
                 <div>
                   <h3 className="text-lg font-medium text-white">Location</h3>
                   <p className="text-white/70">
-                    San Francisco, California, USA
+                    West Bengal , India
                   </p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ const Contact: React.FC = () => {
               <h3 className="text-lg font-medium text-white mb-4">Connect on Social Media</h3>
               <div className="flex gap-4">
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/pyl1nx" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 glass rounded-full hover:bg-white/10 transition-colors"
@@ -104,7 +104,7 @@ const Contact: React.FC = () => {
                   <Github className="w-5 h-5 text-white" />
                 </a>
                 <a 
-                  href="https://linkedin.com" 
+                  href="https://linkedin.com/pyl1nx" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 glass rounded-full hover:bg-white/10 transition-colors"
@@ -112,7 +112,7 @@ const Contact: React.FC = () => {
                   <Linkedin className="w-5 h-5 text-white" />
                 </a>
                 <a 
-                  href="https://twitter.com" 
+                  href="https://x.com/pyl1nx" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 glass rounded-full hover:bg-white/10 transition-colors"
