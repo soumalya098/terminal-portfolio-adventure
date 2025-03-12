@@ -21,68 +21,6 @@ const Projects: React.FC = () => {
   
   // Default projects
   const defaultProjects: Project[] = [
-    {
-      id: 1,
-      title: "E-commerce Platform",
-      description: "A full-featured e-commerce platform with product management, cart functionality, user authentication, and payment processing.",
-      image: "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1380&q=80",
-      technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe API"],
-      features: ["User authentication", "Shopping cart", "Payment processing", "Order history", "Admin dashboard"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      technologies: ["React", "TypeScript", "Firebase", "Tailwind CSS"],
-      features: ["Drag-and-drop task management", "Team collaboration", "Real-time updates", "Task filtering", "Notifications"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com",
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Portfolio Website",
-      description: "A personal portfolio website with an interactive terminal landing page, showcasing projects, skills, and contact information.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80",
-      technologies: ["React", "TypeScript", "Tailwind CSS"],
-      features: ["Interactive terminal", "Project showcase", "Responsive design", "Animations", "Contact form"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 4,
-      title: "Weather Dashboard",
-      description: "A weather application with detailed forecasts, location search, and interactive maps showing real-time weather data.",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80",
-      technologies: ["React", "Weather API", "Mapbox", "CSS Modules"],
-      features: ["5-day forecast", "Location search", "Interactive maps", "Weather alerts", "Favorite locations"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 5,
-      title: "Blog Platform",
-      description: "A full-featured blog platform with markdown support, comments, user profiles, and a custom content management system.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80",
-      technologies: ["Next.js", "PostgreSQL", "Prisma", "NextAuth"],
-      features: ["Markdown editor", "User authentication", "Comments", "Categories and tags", "SEO optimization"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 6,
-      title: "Fitness Tracker",
-      description: "A fitness tracking application that helps users track workouts, set goals, and monitor progress with visualizations.",
-      image: "https://images.unsplash.com/photo-1434682881908-b43d0467b798?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80",
-      technologies: ["React Native", "Firebase", "Chart.js", "Expo"],
-      features: ["Workout tracking", "Progress charts", "Goal setting", "Exercise library", "Workout plans"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    }
   ];
 
   // Load projects from Firebase
