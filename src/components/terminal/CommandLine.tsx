@@ -157,10 +157,8 @@ const CommandLine: React.FC = () => {
             <div className="col-span-2 sm:col-span-1 mt-2 sm:mt-0">
               <p className="text-portfolio-secondary">Other:</p>
               <ul className="list-disc pl-5 text-sm">
-                <li>CI/CD</li>
-                <li>Docker</li>
                 <li>Git/GitHub</li>
-                <li>AWS</li>
+                <li>API</li>
               </ul>
             </div>
           </div>
