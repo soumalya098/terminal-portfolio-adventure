@@ -46,7 +46,7 @@ const Home: React.FC = () => {
             <div className="md:w-1/2 animate-fade-in flex justify-center md:justify-end">
               <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-portfolio-accent/50 shadow-[0_0_25px_rgba(157,70,255,0.3)]">
                 <img
-                  src="https://media-hosting.imagekit.io//a81d633f573f4233/-cds89l.jpg?Expires=1836393242&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=HlgcwbKCqFeLBhxixOep3GghRY7SVXG2vh5G4qwLWFXWIHO8DYWyai17szzkC4TV8HkBnewRC6U~u7Ip~lMosHRiaIBXSyU~OLi3ZcCWX5nde9Ot-TDDs~sRYvSx6IX4O~r6W9jBj9GR5lR2nuq~qHxwJidq-Ox9RPy9AQpOg9Xwh-psdtBG5F18wuR7l~ko-3I9PoR4TxzwKBvHKHowKMMk18uoNaUB4GI54K0R4-vr5VylAFnmh3WOZLReP5dY8F9DUQftR-Fz0msHZOzHGSzdTCejxXTZ3lxJDZ4qNoiWBqVi0yXT-NpoHE86MBF7cl4kBGoBJ0irxFreTHDQrw__auto=format&fit=crop&w=774&q=80"
+                  src="https://i.postimg.cc/fkPy5KLM/IMG-20250309-192643-546.jpg&auto=format&fit=crop&w=774&q=80"
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
