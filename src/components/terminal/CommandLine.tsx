@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "sonner";
 
 type TerminalHistory = Array<{
   command: string;
@@ -13,6 +14,7 @@ const CommandLine: React.FC = () => {
   const [history, setHistory] = useState<TerminalHistory>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [passwordInput, setPasswordInput] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -61,14 +63,45 @@ const CommandLine: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!input.trim()) return;
+    const trimmedInput = input.trim();
+    if (!trimmedInput) return;
+    
+    // If waiting for password input
+    if (passwordInput === 'admin') {
+      const correctPassword = 'tgsoumalya098';
+      
+      if (trimmedInput === correctPassword) {
+        setHistory([...history, {
+          command: '********', // Hide password in history
+          response: <p>Authentication successful. Redirecting to admin panel...</p>
+        }]);
+        
+        // Set admin authentication in localStorage
+        localStorage.setItem('adminAuthenticated', 'true');
+        
+        // Navigate to admin after a short delay
+        setTimeout(() => {
+          navigate('/admin');
+        }, 1000);
+      } else {
+        setHistory([...history, {
+          command: '********', // Hide password in history
+          response: <p className="text-red-500">Authentication failed. Invalid password.</p>,
+          isError: true
+        }]);
+      }
+      
+      setPasswordInput(null);
+      setInput('');
+      return;
+    }
     
     // Save command to history
-    const newCommandHistory = [input, ...commandHistory.slice(0, 9)];
+    const newCommandHistory = [trimmedInput, ...commandHistory.slice(0, 9)];
     setCommandHistory(newCommandHistory);
     setHistoryIndex(-1);
     
-    processCommand(input);
+    processCommand(trimmedInput);
     setInput('');
   };
 
@@ -175,6 +208,9 @@ const CommandLine: React.FC = () => {
     } else if (command === '/time') {
       const now = new Date();
       response = <p>Current time: {now.toLocaleString()}</p>;
+    } else if (command === '/admin') {
+      setPasswordInput('admin');
+      response = <p>Enter admin password:</p>;
     } else if (command === '/coffee') {
       response = (
         <div>
@@ -227,7 +263,7 @@ const CommandLine: React.FC = () => {
     } else if (e.key === 'Tab') {
       // Tab completion
       e.preventDefault();
-      const commands = ['/help', '/start', '/about', '/skills', '/projects', '/contact', '/time', '/clear'];
+      const commands = ['/help', '/start', '/about', '/skills', '/projects', '/contact', '/time', '/clear', '/admin'];
       const matchingCommands = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
       
       if (matchingCommands.length === 1) {
@@ -268,6 +304,7 @@ const CommandLine: React.FC = () => {
           autoFocus
           spellCheck="false"
           autoComplete="off"
+          type={passwordInput ? "password" : "text"}
         />
       </form>
     </div>

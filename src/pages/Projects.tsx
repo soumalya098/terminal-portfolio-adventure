@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { ExternalLink, Github, Code, Package, Layers } from 'lucide-react';
 
 type Project = {
@@ -15,8 +16,10 @@ type Project = {
 
 const Projects: React.FC = () => {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [allProjects, setAllProjects] = useState<Project[]>([]);
   
-  const projects: Project[] = [
+  // Default projects
+  const defaultProjects: Project[] = [
     {
       id: 1,
       title: "E-commerce Platform",
@@ -81,6 +84,28 @@ const Projects: React.FC = () => {
     }
   ];
 
+  // Load projects from localStorage and combine with default projects
+  useEffect(() => {
+    const loadProjects = () => {
+      try {
+        const customProjects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+        setAllProjects([...defaultProjects, ...customProjects]);
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        setAllProjects(defaultProjects);
+      }
+    };
+
+    loadProjects();
+    
+    // Add event listener to refresh projects when localStorage changes
+    window.addEventListener('storage', loadProjects);
+    
+    return () => {
+      window.removeEventListener('storage', loadProjects);
+    };
+  }, []);
+
   const openProjectDetails = (project: Project) => {
     setActiveProject(project);
   };
@@ -89,8 +114,8 @@ const Projects: React.FC = () => {
     setActiveProject(null);
   };
 
-  const featuredProjects = projects.filter(project => project.featured);
-  const regularProjects = projects.filter(project => !project.featured);
+  const featuredProjects = allProjects.filter(project => project.featured);
+  const regularProjects = allProjects.filter(project => !project.featured);
 
   return (
     <div className="min-h-screen py-20">
