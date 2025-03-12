@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from '../config/firebase';
 
 type ProjectFormData = {
@@ -17,6 +17,7 @@ type ProjectFormData = {
 
 const Admin: React.FC = () => {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [projectData, setProjectData] = useState<ProjectFormData>({
     title: '',
     description: '',
@@ -84,12 +85,21 @@ const Admin: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     try {
-      await addDoc(collection(db, "projects"), {
+      const projectToSave = {
         ...projectData,
-        createdAt: new Date(),
-      });
+        createdAt: serverTimestamp(),
+      };
+      
+      if (!projectToSave.title || !projectToSave.description || !projectToSave.image) {
+        toast.error("Please fill in all required fields");
+        setIsSubmitting(false);
+        return;
+      }
+      
+      await addDoc(collection(db, "projects"), projectToSave);
       
       toast.success("Project added successfully!");
       setProjectData({
@@ -103,8 +113,14 @@ const Admin: React.FC = () => {
         featured: false,
       });
     } catch (error) {
-      toast.error("Error adding project");
       console.error("Error adding project:", error);
+      if (error instanceof Error) {
+        toast.error(`Error adding project: ${error.message}`);
+      } else {
+        toast.error("An unknown error occurred when adding the project");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -285,8 +301,9 @@ const Admin: React.FC = () => {
               <button
                 type="submit"
                 className="button-primary px-8 py-3"
+                disabled={isSubmitting}
               >
-                Add Project
+                {isSubmitting ? 'Adding Project...' : 'Add Project'}
               </button>
             </div>
           </form>
