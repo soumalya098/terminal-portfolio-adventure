@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Github, Code, Package } from 'lucide-react';
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
@@ -152,11 +151,11 @@ const Projects: React.FC = () => {
               Featured Projects
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {featuredProjects.map((project) => (
+              {featuredProjects.map((project, index) => (
                 <div 
                   key={project.id} 
                   className="glass overflow-hidden animate-fade-in"
-                  style={{ animationDelay: `${project.id * 100}ms` }}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="h-60 overflow-hidden">
                     <img 
@@ -219,11 +218,11 @@ const Projects: React.FC = () => {
           All Projects
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {regularProjects.map((project) => (
+          {regularProjects.map((project, index) => (
             <div 
               key={project.id} 
               className="project-card animate-fade-in"
-              style={{ animationDelay: `${project.id * 100}ms` }}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="h-48 overflow-hidden rounded-lg mb-4">
                 <img 
