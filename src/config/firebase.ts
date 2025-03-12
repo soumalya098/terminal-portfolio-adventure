@@ -4,11 +4,11 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCgfuBmAdJcfIh1A7OabvkgyaA40WO2AI0",
-  projectId: "portfolio-35c61",
-  appId: "1:175824764352:web:219f0e4f4807fbd1ee5c25",
-  authDomain: "portfolio-35c61.firebaseapp.com",
-  storageBucket: "portfolio-35c61.appspot.com",
+  apiKey: "AIzaSyDgZDih4EQT8BsuBca36REVJwr7rDQOR0k",
+  projectId: "portfolio-5db1a",
+  appId: "1:629464461166:web:947e4e0df48a0b7602db7f",
+  authDomain: "portfolio-5db1a.firebaseapp.com",
+  storageBucket: "portfolio-5db1a.appspot.com",
 };
 
 const app = initializeApp(firebaseConfig);

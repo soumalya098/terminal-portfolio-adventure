@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
@@ -99,6 +100,9 @@ const Admin: React.FC = () => {
         return;
       }
       
+      // Log the attempt to help with debugging
+      console.log("Attempting to save project to Firestore:", projectToSave);
+      
       await addDoc(collection(db, "projects"), projectToSave);
       
       toast.success("Project added successfully!");
@@ -116,6 +120,7 @@ const Admin: React.FC = () => {
       console.error("Error adding project:", error);
       if (error instanceof Error) {
         toast.error(`Error adding project: ${error.message}`);
+        console.log("Detailed error information:", error);
       } else {
         toast.error("An unknown error occurred when adding the project");
       }
