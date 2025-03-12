@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Github, Code, Package } from 'lucide-react';
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from '../config/firebase';
 
 type Project = {
-  id: number;
+  id: string | number;  // Update to accept string (Firestore ID) or number (default projects)
   title: string;
   description: string;
   image: string;
@@ -95,10 +96,21 @@ const Projects: React.FC = () => {
         );
         
         const querySnapshot = await getDocs(projectsQuery);
-        const firebaseProjects = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        })) as Project[];
+        const firebaseProjects = querySnapshot.docs.map(doc => {
+          const data = doc.data();
+          // Ensure the data conforms to our Project type
+          return {
+            id: doc.id,
+            title: data.title || '',
+            description: data.description || '',
+            image: data.image || '',
+            technologies: Array.isArray(data.technologies) ? data.technologies : [],
+            features: Array.isArray(data.features) ? data.features : [],
+            liveUrl: data.liveUrl,
+            githubUrl: data.githubUrl,
+            featured: !!data.featured
+          } as Project;
+        });
         
         // Combine with default projects
         setAllProjects([...defaultProjects, ...firebaseProjects]);
