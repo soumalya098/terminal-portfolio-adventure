@@ -296,7 +296,6 @@ const CommandLine: React.FC = () => {
         <div className="terminal-prompt mr-2">Visitor@portfolio:~$</div>
         <input
           ref={inputRef}
-          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
