@@ -137,7 +137,7 @@ const CommandLine: React.FC = () => {
       response = (
         <div>
           <p className="font-semibold text-portfolio-accent">About Me:</p>
-          <p>Full-stack developer with expertise in python and building ai</p
+          <p>Full-stack developer with expertise in python and building ai</p>
           <p className="mt-2">Type <span className="text-terminal-command">/start</span> to see my full portfolio. </p>
         </div>
       );
