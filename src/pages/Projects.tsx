@@ -1,6 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, Github, Code, Package, Layers } from 'lucide-react';
+import { ExternalLink, Github, Code, Package } from 'lucide-react';
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from '../config/firebase';
 
 type Project = {
   id: number;
@@ -84,12 +85,23 @@ const Projects: React.FC = () => {
     }
   ];
 
-  // Load projects from localStorage and combine with default projects
+  // Load projects from Firebase
   useEffect(() => {
-    const loadProjects = () => {
+    const loadProjects = async () => {
       try {
-        const customProjects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
-        setAllProjects([...defaultProjects, ...customProjects]);
+        const projectsQuery = query(
+          collection(db, "projects"),
+          orderBy("createdAt", "desc")
+        );
+        
+        const querySnapshot = await getDocs(projectsQuery);
+        const firebaseProjects = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Project[];
+        
+        // Combine with default projects
+        setAllProjects([...defaultProjects, ...firebaseProjects]);
       } catch (error) {
         console.error('Error loading projects:', error);
         setAllProjects(defaultProjects);
@@ -97,13 +109,6 @@ const Projects: React.FC = () => {
     };
 
     loadProjects();
-    
-    // Add event listener to refresh projects when localStorage changes
-    window.addEventListener('storage', loadProjects);
-    
-    return () => {
-      window.removeEventListener('storage', loadProjects);
-    };
   }, []);
 
   const openProjectDetails = (project: Project) => {

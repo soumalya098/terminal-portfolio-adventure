@@ -1,7 +1,8 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '../config/firebase';
 
 type ProjectFormData = {
   title: string;
@@ -29,7 +30,6 @@ const Admin: React.FC = () => {
   const [newTechnology, setNewTechnology] = useState('');
   const [newFeature, setNewFeature] = useState('');
 
-  // Check if user is authenticated (in a real app, this would use a proper auth system)
   React.useEffect(() => {
     const isAuthenticated = localStorage.getItem('adminAuthenticated') === 'true';
     if (!isAuthenticated) {
@@ -82,30 +82,30 @@ const Admin: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // In a real application, this would send data to a backend or database
-    // For this demo, we'll just store in localStorage
-    const existingProjects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
-    const newProject = {
-      ...projectData,
-      id: Date.now() // Simple ID generation
-    };
-    
-    localStorage.setItem('portfolioProjects', JSON.stringify([...existingProjects, newProject]));
-    
-    toast.success("Project added successfully!");
-    setProjectData({
-      title: '',
-      description: '',
-      image: '',
-      technologies: [],
-      features: [],
-      liveUrl: '',
-      githubUrl: '',
-      featured: false,
-    });
+    try {
+      await addDoc(collection(db, "projects"), {
+        ...projectData,
+        createdAt: new Date(),
+      });
+      
+      toast.success("Project added successfully!");
+      setProjectData({
+        title: '',
+        description: '',
+        image: '',
+        technologies: [],
+        features: [],
+        liveUrl: '',
+        githubUrl: '',
+        featured: false,
+      });
+    } catch (error) {
+      toast.error("Error adding project");
+      console.error("Error adding project:", error);
+    }
   };
 
   const logout = () => {
