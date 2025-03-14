@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 type ImageUploaderProps = {
   images: string[];
-  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  setImages: (images: string[]) => void;
 };
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
@@ -40,7 +40,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
         setUploadProgress(Math.round((completedFiles / totalFiles) * 100));
       }
       
-      setImages(prev => [...prev, ...newUrls]);
+      setImages([...images, ...newUrls]);
       toast.success(`${newUrls.length} image${newUrls.length > 1 ? 's' : ''} uploaded successfully`);
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -54,7 +54,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages(images.filter((_, i) => i !== index));
   };
 
   return (

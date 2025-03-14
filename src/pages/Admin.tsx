@@ -146,6 +146,14 @@ const Admin: React.FC = () => {
     toast.info("Logged out successfully");
   };
 
+  // Fix: Correctly handle the image array update by ensuring the type is string[]
+  const handleImagesUpdate = (newImages: string[]) => {
+    setProjectData(prev => ({
+      ...prev,
+      images: newImages
+    }));
+  };
+
   return (
     <div className="min-h-screen py-20">
       <div className="section-container">
@@ -219,7 +227,7 @@ const Admin: React.FC = () => {
                 
                 <ImageUploader 
                   images={projectData.images} 
-                  setImages={(images) => setProjectData(prev => ({ ...prev, images }))}
+                  setImages={handleImagesUpdate}
                 />
               </div>
               
