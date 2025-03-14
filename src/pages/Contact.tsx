@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
@@ -69,10 +70,10 @@ const Contact: React.FC = () => {
   return (
     <div className="min-h-screen py-20 overflow-hidden">
       <div className="section-container">
-        <h1 className="text-4xl font-bold heading-gradient mb-4 text-center animate-fade-in">
+        <h1 className="text-4xl font-bold text-white mb-4 text-center animate-fade-in">
           Get In Touch
         </h1>
-        <p className="text-white/90 text-center max-w-2xl mx-auto mb-12 animate-fade-in">
+        <p className="text-white text-center max-w-2xl mx-auto mb-12 animate-fade-in">
           Feel free to reach out for collaborations, opportunities, or just to say hello!
           I'm always open to discussing new projects and ideas.
         </p>
@@ -94,7 +95,7 @@ const Contact: React.FC = () => {
                   <h3 className="text-lg font-medium text-white mb-1">Email</h3>
                   <a 
                     href="mailto:example@portfolio.com" 
-                    className="text-white/90 hover:text-portfolio-accent transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-portfolio-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    className="text-white hover:text-portfolio-accent transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-portfolio-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
                   >
                     example@portfolio.com
                   </a>
@@ -109,7 +110,7 @@ const Contact: React.FC = () => {
                   <h3 className="text-lg font-medium text-white mb-1">Phone</h3>
                   <a 
                     href="tel:+11234567890" 
-                    className="text-white/90 hover:text-portfolio-accent transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-portfolio-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    className="text-white hover:text-portfolio-accent transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-portfolio-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
                   >
                     +1 (123) 456-7890
                   </a>
@@ -122,7 +123,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-medium text-white mb-1">Location</h3>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     San Francisco, California, USA
                   </p>
                 </div>
@@ -164,7 +165,7 @@ const Contact: React.FC = () => {
             
             <div className="mt-12 pt-6 border-t border-white/10">
               <h3 className="text-lg font-medium text-white mb-3">Preferred Contact Method</h3>
-              <p className="text-white/90">
+              <p className="text-white">
                 The quickest way to reach me is via email. I typically respond within 24 hours.
               </p>
             </div>
@@ -183,7 +184,7 @@ const Contact: React.FC = () => {
                   <CheckCircle className="w-12 h-12 text-portfolio-accent" />
                 </div>
                 <h3 className="text-xl font-medium text-white">Message Sent Successfully!</h3>
-                <p className="text-white/90 max-w-md">
+                <p className="text-white max-w-md">
                   Thank you for reaching out. I'll get back to you as soon as possible!
                 </p>
               </div>
@@ -191,7 +192,7 @@ const Contact: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label htmlFor="name" className="block text-white/90 mb-2">Name</label>
+                    <label htmlFor="name" className="block text-white mb-2">Name</label>
                     <input
                       type="text"
                       id="name"
@@ -204,7 +205,7 @@ const Contact: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-white/90 mb-2">Email</label>
+                    <label htmlFor="email" className="block text-white mb-2">Email</label>
                     <input
                       type="email"
                       id="email"
@@ -218,7 +219,7 @@ const Contact: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="subject" className="block text-white/90 mb-2">Subject</label>
+                  <label htmlFor="subject" className="block text-white mb-2">Subject</label>
                   <input
                     type="text"
                     id="subject"
@@ -231,7 +232,7 @@ const Contact: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="message" className="block text-white/90 mb-2">Message</label>
+                  <label htmlFor="message" className="block text-white mb-2">Message</label>
                   <textarea
                     id="message"
                     name="message"
