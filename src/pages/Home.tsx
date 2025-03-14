@@ -48,10 +48,10 @@ const Home: React.FC = () => {
                     <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-portfolio-secondary to-portfolio-accent transform scale-x-0 transition-transform duration-700 ease-in-out origin-left group-hover:scale-x-100"></span>
                   </span>
                 </h1>
-                <h2 className="text-xl sm:text-2xl text-white/80 transform transition-all duration-700">
+                <h2 className="text-xl sm:text-2xl text-white/90 transform transition-all duration-700">
                   Full-stack Developer
                 </h2>
-                <p className="text-white/70 max-w-md text-base sm:text-lg">
+                <p className="text-white/90 max-w-md text-base sm:text-lg">
                   I build modern, responsive web applications using cutting-edge technologies.
                   Focused on creating clean, efficient, and user-friendly experiences.
                 </p>
@@ -132,11 +132,11 @@ const Home: React.FC = () => {
             <div className="mt-8 pt-6 border-t border-white/10">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-4">Currently working on</h3>
               <div className="glass bg-black/20 p-5 rounded-md space-y-3 transform transition-all duration-500 hover:translate-x-2">
-                <p className="text-white/80 flex items-start">
+                <p className="text-white/90 flex items-start">
                   <span className="text-portfolio-accent mr-2">→</span> 
                   <span>An AI-powered content management system with advanced analytics</span>
                 </p>
-                <p className="text-white/80 flex items-start">
+                <p className="text-white/90 flex items-start">
                   <span className="text-portfolio-accent mr-2">→</span> 
                   <span>Learning Rust for backend performance optimization and WebAssembly integration</span>
                 </p>
@@ -158,7 +158,7 @@ const Home: React.FC = () => {
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="glass p-6 animate-on-scroll opacity-0 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">Frontend</h3>
-              <p className="text-white/70 mb-4">Building beautiful, responsive UIs with modern frameworks</p>
+              <p className="text-white/90 mb-4">Building beautiful, responsive UIs with modern frameworks</p>
               <div className="flex flex-wrap gap-2">
                 <span className="skill-badge">React</span>
                 <span className="skill-badge">TypeScript</span>
@@ -168,7 +168,7 @@ const Home: React.FC = () => {
             
             <div className="glass p-6 animate-on-scroll opacity-0 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">Backend</h3>
-              <p className="text-white/70 mb-4">Creating robust APIs and server-side applications</p>
+              <p className="text-white/90 mb-4">Creating robust APIs and server-side applications</p>
               <div className="flex flex-wrap gap-2">
                 <span className="skill-badge">Node.js</span>
                 <span className="skill-badge">Express</span>
@@ -178,7 +178,7 @@ const Home: React.FC = () => {
             
             <div className="glass p-6 animate-on-scroll opacity-0 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">DevOps</h3>
-              <p className="text-white/70 mb-4">Deploying and maintaining applications in the cloud</p>
+              <p className="text-white/90 mb-4">Deploying and maintaining applications in the cloud</p>
               <div className="flex flex-wrap gap-2">
                 <span className="skill-badge">Docker</span>
                 <span className="skill-badge">CI/CD</span>
