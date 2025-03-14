@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from '../config/firebase';
+import ImageUploader from '../components/admin/ImageUploader';
 
 type ProjectFormData = {
   title: string;
   description: string;
   image: string;
+  images: string[];
   technologies: string[];
   features: string[];
   liveUrl?: string;
@@ -23,6 +25,7 @@ const Admin: React.FC = () => {
     title: '',
     description: '',
     image: '',
+    images: [],
     technologies: [],
     features: [],
     liveUrl: '',
@@ -39,6 +42,13 @@ const Admin: React.FC = () => {
       toast.error("Unauthorized access. Please use the terminal to access admin page.");
     }
   }, [navigate]);
+
+  // Set the main image whenever images array changes
+  useEffect(() => {
+    if (projectData.images.length > 0) {
+      setProjectData(prev => ({ ...prev, image: prev.images[0] }));
+    }
+  }, [projectData.images]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -94,8 +104,8 @@ const Admin: React.FC = () => {
         createdAt: serverTimestamp(),
       };
       
-      if (!projectToSave.title || !projectToSave.description || !projectToSave.image) {
-        toast.error("Please fill in all required fields");
+      if (!projectToSave.title || !projectToSave.description || projectToSave.images.length === 0) {
+        toast.error("Please fill in all required fields and upload at least one image");
         setIsSubmitting(false);
         return;
       }
@@ -110,6 +120,7 @@ const Admin: React.FC = () => {
         title: '',
         description: '',
         image: '',
+        images: [],
         technologies: [],
         features: [],
         liveUrl: '',
@@ -148,7 +159,7 @@ const Admin: React.FC = () => {
           </button>
         </div>
         
-        <div className="glass p-6 rounded-xl">
+        <div className="glass p-6 rounded-xl animate-fade-in">
           <h2 className="text-2xl font-semibold mb-6 border-l-4 border-portfolio-accent pl-3">
             Add New Project
           </h2>
@@ -157,7 +168,7 @@ const Admin: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-white mb-2">Project Title</label>
+                  <label className="block text-white mb-2">Project Title <span className="text-red-400">*</span></label>
                   <input
                     type="text"
                     name="title"
@@ -165,19 +176,6 @@ const Admin: React.FC = () => {
                     onChange={handleInputChange}
                     className="w-full bg-white/5 border border-white/10 rounded-md p-3 text-white"
                     required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-white mb-2">Image URL</label>
-                  <input
-                    type="url"
-                    name="image"
-                    value={projectData.image}
-                    onChange={handleInputChange}
-                    className="w-full bg-white/5 border border-white/10 rounded-md p-3 text-white"
-                    required
-                    placeholder="https://example.com/image.jpg"
                   />
                 </div>
                 
@@ -218,11 +216,16 @@ const Admin: React.FC = () => {
                     Featured Project
                   </label>
                 </div>
+                
+                <ImageUploader 
+                  images={projectData.images} 
+                  setImages={(images) => setProjectData(prev => ({ ...prev, images }))}
+                />
               </div>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-white mb-2">Description</label>
+                  <label className="block text-white mb-2">Description <span className="text-red-400">*</span></label>
                   <textarea
                     name="description"
                     value={projectData.description}
