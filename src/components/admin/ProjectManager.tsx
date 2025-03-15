@@ -5,6 +5,14 @@ import { db } from '../../config/firebase';
 import { Pencil, Trash2, X, Check, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import ImageUploader from './ImageUploader';
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "@/components/ui/table";
 
 type Project = {
   id: string;
@@ -26,11 +34,13 @@ const ProjectManager: React.FC = () => {
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch all projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        setError(null);
         const projectsSnapshot = await getDocs(collection(db, "projects"));
         const projectsList = projectsSnapshot.docs.map(doc => ({
           id: doc.id,
@@ -39,14 +49,15 @@ const ProjectManager: React.FC = () => {
         
         // Sort projects by createdAt (newest first)
         projectsList.sort((a, b) => {
-          const dateA = a.createdAt?.toDate?.() || new Date(0);
-          const dateB = b.createdAt?.toDate?.() || new Date(0);
+          const dateA = a.createdAt?.toDate?.() ? a.createdAt.toDate() : new Date(0);
+          const dateB = b.createdAt?.toDate?.() ? b.createdAt.toDate() : new Date(0);
           return dateB.getTime() - dateA.getTime();
         });
         
         setProjects(projectsList);
       } catch (error) {
         console.error("Error fetching projects:", error);
+        setError("Failed to load projects. Please try again later.");
         toast.error("Failed to load projects");
       } finally {
         setLoading(false);
@@ -128,18 +139,23 @@ const ProjectManager: React.FC = () => {
     });
   };
 
-  const addTechnology = (technology: string) => {
-    if (!editingProject || !technology.trim()) return;
+  // Technology and feature management functions
+  const [newTech, setNewTech] = useState('');
+  const [newFeature, setNewFeature] = useState('');
+
+  const addTechnology = () => {
+    if (!editingProject || !newTech.trim()) return;
     
     setEditingProject(prev => {
       if (prev) {
         return {
           ...prev,
-          technologies: [...prev.technologies, technology.trim()]
+          technologies: [...prev.technologies, newTech.trim()]
         };
       }
       return null;
     });
+    setNewTech('');
   };
 
   const removeTechnology = (index: number) => {
@@ -156,18 +172,19 @@ const ProjectManager: React.FC = () => {
     });
   };
 
-  const addFeature = (feature: string) => {
-    if (!editingProject || !feature.trim()) return;
+  const addFeature = () => {
+    if (!editingProject || !newFeature.trim()) return;
     
     setEditingProject(prev => {
       if (prev) {
         return {
           ...prev,
-          features: [...prev.features, feature.trim()]
+          features: [...prev.features, newFeature.trim()]
         };
       }
       return null;
     });
+    setNewFeature('');
   };
 
   const removeFeature = (index: number) => {
@@ -193,6 +210,21 @@ const ProjectManager: React.FC = () => {
       <div className="flex justify-center items-center p-10">
         <div className="w-8 h-8 border-2 border-portfolio-accent border-t-transparent rounded-full animate-spin"></div>
         <span className="ml-2 text-white">Loading projects...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center p-10 text-red-400">
+        <AlertCircle size={40} className="mx-auto mb-4" />
+        <p>{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="mt-4 px-4 py-2 bg-portfolio-accent rounded"
+        >
+          Try Again
+        </button>
       </div>
     );
   }
@@ -297,24 +329,20 @@ const ProjectManager: React.FC = () => {
                     <div className="flex">
                       <input
                         type="text"
-                        id="new-tech-edit"
+                        value={newTech}
+                        onChange={(e) => setNewTech(e.target.value)}
                         className="flex-grow bg-white/5 border border-white/10 rounded-l-md p-3 text-white"
                         placeholder="e.g., React, Node.js"
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
                             e.preventDefault();
-                            addTechnology((e.target as HTMLInputElement).value);
-                            (e.target as HTMLInputElement).value = '';
+                            addTechnology();
                           }
                         }}
                       />
                       <button
                         type="button"
-                        onClick={() => {
-                          const input = document.getElementById('new-tech-edit') as HTMLInputElement;
-                          addTechnology(input.value);
-                          input.value = '';
-                        }}
+                        onClick={addTechnology}
                         className="bg-portfolio-accent px-4 rounded-r-md"
                       >
                         Add
@@ -341,24 +369,20 @@ const ProjectManager: React.FC = () => {
                     <div className="flex">
                       <input
                         type="text"
-                        id="new-feature-edit"
+                        value={newFeature}
+                        onChange={(e) => setNewFeature(e.target.value)}
                         className="flex-grow bg-white/5 border border-white/10 rounded-l-md p-3 text-white"
                         placeholder="e.g., User authentication"
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
                             e.preventDefault();
-                            addFeature((e.target as HTMLInputElement).value);
-                            (e.target as HTMLInputElement).value = '';
+                            addFeature();
                           }
                         }}
                       />
                       <button
                         type="button"
-                        onClick={() => {
-                          const input = document.getElementById('new-feature-edit') as HTMLInputElement;
-                          addFeature(input.value);
-                          input.value = '';
-                        }}
+                        onClick={addFeature}
                         className="bg-portfolio-accent px-4 rounded-r-md"
                       >
                         Add
@@ -411,89 +435,100 @@ const ProjectManager: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map(project => (
-                <div key={project.id} className="glass p-4 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)] transition-all duration-300">
-                  <div className="relative h-40 mb-3 rounded overflow-hidden border border-white/10">
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover"
-                    />
-                    {project.featured && (
-                      <div className="absolute top-2 left-2 px-2 py-1 bg-portfolio-accent/90 text-white text-xs rounded">
-                        Featured
-                      </div>
-                    )}
-                  </div>
-                  
-                  <h3 className="text-lg font-medium text-white mb-2">{project.title}</h3>
-                  <p className="text-white/70 text-sm mb-3 line-clamp-2">{project.description}</p>
-                  
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {project.technologies.slice(0, 3).map((tech, idx) => (
-                      <span key={idx} className="text-xs bg-white/10 px-2 py-0.5 rounded text-white/80">
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-white/80">
-                        +{project.technologies.length - 3}
-                      </span>
-                    )}
-                  </div>
-                  
-                  <div className="flex justify-between items-center mt-4">
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleEditProject(project)}
-                        className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                        title="Edit project"
-                      >
-                        <Pencil size={16} className="text-white" />
-                      </button>
-                      <button
-                        onClick={() => setShowDeleteConfirm(project.id)}
-                        className="p-2 rounded-full bg-white/10 hover:bg-red-500/20 transition-colors"
-                        title="Delete project"
-                      >
-                        <Trash2 size={16} className="text-white" />
-                      </button>
-                    </div>
-                    
-                    <span className="text-xs text-white/50">
-                      {project.createdAt?.toDate ? 
-                        new Date(project.createdAt.toDate()).toLocaleDateString() : 
-                        'Unknown date'}
-                    </span>
-                  </div>
-                  
-                  {showDeleteConfirm === project.id && (
-                    <div className="mt-3 p-2 border border-red-500/30 rounded bg-red-500/10 text-sm">
-                      <div className="flex items-start gap-2">
-                        <AlertCircle size={16} className="text-red-400 mt-0.5" />
-                        <div>
-                          <p className="text-white mb-2">Are you sure you want to delete this project?</p>
-                          <div className="flex gap-2 justify-end">
-                            <button
-                              onClick={() => setShowDeleteConfirm(null)}
-                              className="px-2 py-1 text-xs bg-white/10 rounded hover:bg-white/20 transition-colors"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              onClick={() => handleDeleteProject(project.id)}
-                              className="px-2 py-1 text-xs bg-red-500/70 text-white rounded hover:bg-red-500 transition-colors"
-                            >
-                              Delete
-                            </button>
+            <div className="overflow-x-auto">
+              <Table className="w-full border-collapse text-white">
+                <TableHeader>
+                  <TableRow className="border-b border-white/10">
+                    <TableHead className="text-white">Project</TableHead>
+                    <TableHead className="text-white">Status</TableHead>
+                    <TableHead className="text-white">Date</TableHead>
+                    <TableHead className="text-white text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {projects.map(project => (
+                    <TableRow 
+                      key={project.id} 
+                      className="border-b border-white/10 hover:bg-white/5"
+                    >
+                      <TableCell className="py-4">
+                        <div className="flex items-center space-x-3">
+                          <div className="h-12 w-12 rounded overflow-hidden">
+                            <img 
+                              src={project.image} 
+                              alt={project.title} 
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <div className="font-medium">{project.title}</div>
+                            <div className="text-xs text-white/60 line-clamp-1">{project.description}</div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                      </TableCell>
+                      <TableCell>
+                        {project.featured ? (
+                          <span className="px-2 py-1 bg-portfolio-accent/20 text-portfolio-accent rounded-full text-xs">
+                            Featured
+                          </span>
+                        ) : (
+                          <span className="px-2 py-1 bg-white/10 text-white/60 rounded-full text-xs">
+                            Standard
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {project.createdAt?.toDate ? 
+                          new Date(project.createdAt.toDate()).toLocaleDateString() : 
+                          'Unknown date'}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end space-x-2">
+                          <button
+                            onClick={() => handleEditProject(project)}
+                            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                            title="Edit project"
+                          >
+                            <Pencil size={16} className="text-white" />
+                          </button>
+                          <button
+                            onClick={() => setShowDeleteConfirm(project.id)}
+                            className="p-2 rounded-full bg-white/10 hover:bg-red-500/20 transition-colors"
+                            title="Delete project"
+                          >
+                            <Trash2 size={16} className="text-white" />
+                          </button>
+                        </div>
+                        
+                        {showDeleteConfirm === project.id && (
+                          <div className="absolute right-10 mt-2 p-3 border border-red-500/30 rounded bg-black/90 text-sm z-10 w-60">
+                            <div className="flex items-start gap-2">
+                              <AlertCircle size={16} className="text-red-400 mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-white mb-2">Are you sure you want to delete this project?</p>
+                                <div className="flex gap-2 justify-end">
+                                  <button
+                                    onClick={() => setShowDeleteConfirm(null)}
+                                    className="px-2 py-1 text-xs bg-white/10 rounded hover:bg-white/20 transition-colors"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteProject(project.id)}
+                                    className="px-2 py-1 text-xs bg-red-500/70 text-white rounded hover:bg-red-500 transition-colors"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           )}
         </div>
