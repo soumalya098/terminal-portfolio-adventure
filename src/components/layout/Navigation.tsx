@@ -27,7 +27,7 @@ const Navigation: React.FC = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Don't render Navigation on the terminal page
+  // Don't render Navigation on the terminal page or any pages that should have terminal-style navigation
   if (location.pathname === '/') {
     return null;
   }
@@ -91,7 +91,7 @@ const Navigation: React.FC = () => {
 
       {/* Mobile Navigation */}
       <div 
-        className={`md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-white/10 transform transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed top-[60px] left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-white/10 transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
