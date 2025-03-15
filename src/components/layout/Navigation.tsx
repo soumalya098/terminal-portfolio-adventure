@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   // Toggle navbar appearance on scroll
   useEffect(() => {
@@ -25,10 +27,15 @@ const Navigation: React.FC = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  // Don't render Navigation on the terminal page
+  if (location.pathname === '/') {
+    return null;
+  }
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
-        ${isScrolled ? 'py-2 glass' : 'py-4 bg-transparent'}`}
+        ${isScrolled ? 'py-2 glass' : 'py-4 bg-portfolio-background/80 backdrop-blur-sm'}`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="flex justify-between items-center">
