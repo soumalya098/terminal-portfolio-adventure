@@ -68,8 +68,8 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen py-20 pt-28 overflow-hidden">
-      <div className="section-container">
+    <div className="min-h-screen py-20 pt-28 bg-portfolio-background overflow-hidden text-gray-100">
+      <div className="container mx-auto px-6 lg:px-8">
         <h1 className="text-4xl font-bold text-white mb-4 text-center animate-fade-in">
           Get In Touch
         </h1>

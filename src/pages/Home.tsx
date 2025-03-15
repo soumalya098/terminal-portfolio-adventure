@@ -35,10 +35,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen bg-portfolio-background overflow-x-hidden text-gray-100">
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col justify-center relative pt-16">
-        <div className="section-container">
+      <section className="min-h-screen flex flex-col justify-center relative pt-24">
+        <div className="container mx-auto px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="md:w-1/2 space-y-6 animate-fade-in">
               <div className="space-y-3">
@@ -103,7 +103,7 @@ const Home: React.FC = () => {
 
       {/* About Section */}
       <section id="about-section" className="py-20 bg-portfolio-background/80 backdrop-blur-[5px] relative z-10">
-        <div className="section-container">
+        <div className="container mx-auto px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-white mb-8 text-center animate-on-scroll opacity-0">
             About Me
           </h2>

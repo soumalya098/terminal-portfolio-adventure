@@ -35,7 +35,7 @@ const Navigation: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
-        ${isScrolled ? 'py-2 glass' : 'py-4 bg-portfolio-background/80 backdrop-blur-sm'}`}
+        ${isScrolled ? 'py-2 bg-black/80 backdrop-blur-md' : 'py-4 bg-black/70 backdrop-blur-sm'}`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="flex justify-between items-center">
@@ -91,7 +91,7 @@ const Navigation: React.FC = () => {
 
       {/* Mobile Navigation */}
       <div 
-        className={`md:hidden absolute top-full left-0 right-0 glass border-t border-white/10 transform transition-transform duration-300 ease-in-out ${
+        className={`md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-white/10 transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
