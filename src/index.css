@@ -130,4 +130,14 @@
   .button-outline {
     @apply border border-portfolio-secondary text-portfolio-secondary hover:border-portfolio-accent hover:text-portfolio-accent px-6 py-2 rounded-md shadow-md transition-all duration-300 inline-block;
   }
+  
+  /* Fix for animation-related visibility issues */
+  .animate-on-scroll {
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+  
+  .animate-on-scroll.visible {
+    opacity: 1;
+  }
 }

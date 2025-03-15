@@ -23,14 +23,14 @@ const Contact: React.FC = () => {
         const isVisible = (elementTop >= 0) && (elementBottom <= window.innerHeight);
         
         if (isVisible) {
-          element.classList.add('animate-fade-in');
+          element.classList.add('visible');
         }
       });
     };
 
     window.addEventListener('scroll', animateOnScroll);
     // Initial check
-    animateOnScroll();
+    setTimeout(animateOnScroll, 100); // Slight delay to ensure DOM is ready
     
     return () => {
       window.removeEventListener('scroll', animateOnScroll);
@@ -70,17 +70,17 @@ const Contact: React.FC = () => {
   return (
     <div className="min-h-screen py-20 pt-28 bg-portfolio-background overflow-hidden text-gray-100">
       <div className="container mx-auto px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-white mb-4 text-center animate-fade-in">
+        <h1 className="text-4xl font-bold text-white mb-4 text-center">
           Get In Touch
         </h1>
-        <p className="text-gray-300 text-center max-w-2xl mx-auto mb-12 animate-fade-in">
+        <p className="text-gray-300 text-center max-w-2xl mx-auto mb-12">
           Feel free to reach out for collaborations, opportunities, or just to say hello!
           I'm always open to discussing new projects and ideas.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Contact Information */}
-          <div className="glass p-8 animate-on-scroll opacity-0 transform transition-all duration-500 hover:shadow-[0_5px_30px_rgba(157,70,255,0.15)]">
+          <div className="glass p-8 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:shadow-[0_5px_30px_rgba(157,70,255,0.15)]">
             <h2 className="text-2xl font-semibold text-white mb-8 relative">
               Contact Information
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-portfolio-accent"></span>
@@ -172,7 +172,7 @@ const Contact: React.FC = () => {
           </div>
           
           {/* Contact Form */}
-          <div className="glass p-8 animate-on-scroll opacity-0 transform transition-all duration-500 hover:shadow-[0_5px_30px_rgba(157,70,255,0.15)]">
+          <div className="glass p-8 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:shadow-[0_5px_30px_rgba(157,70,255,0.15)]">
             <h2 className="text-2xl font-semibold text-white mb-8 relative">
               Send a Message
               <span className="absolute bottom-0 left-0 w-16 h-1 bg-portfolio-accent"></span>
@@ -267,7 +267,7 @@ const Contact: React.FC = () => {
         </div>
         
         {/* Map or Additional Info Section */}
-        <div className="mt-16 glass p-8 animate-on-scroll opacity-0">
+        <div className="mt-16 glass p-8 animate-on-scroll visible opacity-100 transition-opacity duration-700">
           <h2 className="text-2xl font-semibold text-white mb-6 text-center">Find Me Here</h2>
           <div className="aspect-video w-full bg-white/5 rounded-lg overflow-hidden relative">
             <iframe

@@ -13,14 +13,14 @@ const Home: React.FC = () => {
         const isVisible = (elementTop >= 0) && (elementBottom <= window.innerHeight);
         
         if (isVisible) {
-          element.classList.add('animate-fade-in');
+          element.classList.add('visible');
         }
       });
     };
 
     window.addEventListener('scroll', animateOnScroll);
     // Initial check
-    animateOnScroll();
+    setTimeout(animateOnScroll, 100); // Slight delay to ensure DOM is ready
     
     return () => {
       window.removeEventListener('scroll', animateOnScroll);
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
       <section className="min-h-screen flex flex-col justify-center relative pt-24">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="md:w-1/2 space-y-6 animate-fade-in">
+            <div className="md:w-1/2 space-y-6">
               <div className="space-y-3">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
                   Hi, I'm <span className="heading-gradient font-bold relative inline-block">
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
               </div>
             </div>
             
-            <div className="md:w-1/2 animate-fade-in flex justify-center md:justify-end">
+            <div className="md:w-1/2 flex justify-center md:justify-end">
               <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-portfolio-accent/50 shadow-[0_0_25px_rgba(157,70,255,0.3)] transition-all duration-500 hover:shadow-[0_0_35px_rgba(157,70,255,0.5)] hover:scale-105">
                 <img
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
@@ -104,11 +104,11 @@ const Home: React.FC = () => {
       {/* About Section */}
       <section id="about-section" className="py-20 bg-portfolio-background/80 backdrop-blur-[5px] relative z-10">
         <div className="container mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center animate-on-scroll opacity-0">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center animate-on-scroll visible opacity-100 transition-opacity duration-700">
             About Me
           </h2>
           
-          <div className="glass p-8 sm:p-10 max-w-4xl mx-auto animate-on-scroll opacity-0 transform transition-all duration-700 hover:shadow-[0_5px_30px_rgba(157,70,255,0.2)]">
+          <div className="glass p-8 sm:p-10 max-w-4xl mx-auto animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-700 hover:shadow-[0_5px_30px_rgba(157,70,255,0.2)]">
             <div className="space-y-6">
               <p className="text-gray-300 leading-relaxed">
                 I'm a passionate web developer with over 5 years of experience creating dynamic 
@@ -156,7 +156,7 @@ const Home: React.FC = () => {
           </div>
           
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="glass p-6 animate-on-scroll opacity-0 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
+            <div className="glass p-6 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">Frontend</h3>
               <p className="text-gray-300 mb-4">Building beautiful, responsive UIs with modern frameworks</p>
               <div className="flex flex-wrap gap-2">
@@ -166,7 +166,7 @@ const Home: React.FC = () => {
               </div>
             </div>
             
-            <div className="glass p-6 animate-on-scroll opacity-0 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
+            <div className="glass p-6 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">Backend</h3>
               <p className="text-gray-300 mb-4">Creating robust APIs and server-side applications</p>
               <div className="flex flex-wrap gap-2">
@@ -176,7 +176,7 @@ const Home: React.FC = () => {
               </div>
             </div>
             
-            <div className="glass p-6 animate-on-scroll opacity-0 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
+            <div className="glass p-6 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">DevOps</h3>
               <p className="text-gray-300 mb-4">Deploying and maintaining applications in the cloud</p>
               <div className="flex flex-wrap gap-2">
