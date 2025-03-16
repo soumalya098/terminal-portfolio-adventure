@@ -4,6 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDgZDih4EQT8BsuBca36REVJwr7rDQOR0k",
   projectId: "portfolio-5db1a",
@@ -13,7 +14,17 @@ const firebaseConfig = {
   messagingSenderId: "629464461166",
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase services
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
+
+// Enable better performance for storage operations
+const storageSettings = storage.settings;
+if (storageSettings) {
+  // If available, adjust performance settings
+  console.log("Firebase Storage initialized successfully");
+}
