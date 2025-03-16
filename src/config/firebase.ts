@@ -10,6 +10,7 @@ const firebaseConfig = {
   appId: "1:629464461166:web:947e4e0df48a0b7602db7f",
   authDomain: "portfolio-5db1a.firebaseapp.com",
   storageBucket: "portfolio-5db1a.appspot.com",
+  messagingSenderId: "629464461166",
 };
 
 const app = initializeApp(firebaseConfig);
