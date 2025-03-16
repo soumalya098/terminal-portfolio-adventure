@@ -1,7 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Upload, X, Image as ImageIcon, Check } from 'lucide-react';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
@@ -31,12 +31,19 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
     setCurrentFileIndex(0);
     
     const newUrls: string[] = [];
-    const maxFileSizeMB = 10; // Increased max file size to 10MB
+    const maxFileSizeMB = 15; // Increased max file size to 15MB
 
     try {
-      for (let i = 0; i < files.length; i++) {
+      // Convert FileList to array for easier processing
+      const fileArray = Array.from(files);
+      const totalFiles = fileArray.length;
+      
+      // Process files one at a time, but with direct upload instead of resumable
+      for (let i = 0; i < totalFiles; i++) {
         setCurrentFileIndex(i + 1);
-        const file = files[i];
+        setUploadProgress(Math.round((i / totalFiles) * 100));
+        
+        const file = fileArray[i];
         
         // Check file size but allow larger files
         if (file.size > maxFileSizeMB * 1024 * 1024) {
@@ -46,51 +53,30 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
         
         // Create a more distinct file identifier
         const fileId = uuidv4().slice(0, 8);
-        const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_').slice(0, 30); // Limit filename length
-        const timestamp = Date.now();
-        const storagePath = `project-images/${timestamp}_${fileId}_${cleanFileName}`;
-        
-        console.log(`Uploading file ${i + 1}/${files.length}: ${file.name} to ${storagePath}`);
-        console.log(`File type: ${file.type}, size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`);
-        
-        // Create storage reference for this file
-        const storageRef = ref(storage, storagePath);
-        
-        // Use uploadBytesResumable for better control and progress tracking
-        const uploadTask = uploadBytesResumable(storageRef, file);
-        
-        // Create a promise that resolves when the upload completes
-        await new Promise<void>((resolve, reject) => {
-          uploadTask.on(
-            'state_changed',
-            (snapshot) => {
-              // Track individual file progress
-              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              console.log(`File ${i + 1} progress: ${progress.toFixed(1)}%`);
-              
-              // Update overall progress (current file progress + completed files)
-              const overallProgress = ((i + (progress / 100)) / files.length) * 100;
-              setUploadProgress(Math.round(overallProgress));
-            },
-            (error) => {
-              console.error(`Error uploading file ${i + 1}:`, error);
-              console.error(`Error code: ${error.code}, message: ${error.message}`);
-              reject(error);
-            },
-            async () => {
-              try {
-                // Upload completed successfully, get download URL
-                const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-                console.log(`Got download URL for file ${i + 1}`);
-                newUrls.push(downloadUrl);
-                resolve();
-              } catch (urlError) {
-                console.error('Error getting download URL:', urlError);
-                reject(urlError);
-              }
-            }
-          );
-        });
+        const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_').slice(0, 30);
+        const timestamp = Date.now();  
+            
+        // Using direct upload method instead of resume, which should optimize for speed
+        console.log(`Uploading file ${i + 1}/${totalFiles}: ${file.name}, size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`);
+         
+        // Create storage ref
+        const storageRef = ref(storage, `project-images/${timestamp}_${fileId}_${cleanFileName}`);
+          
+        // Direct upload with uploadBytes, for simplicity and speed
+        try {
+          const uploadResult = await uploadBytes(storageRef, file);
+          const downloadUrl = await getDownloadURL(uploadResult.ref);
+          
+          console.log(`File ${i + 1} uploaded successfully`);
+          newUrls.push(downloadUrl);
+          
+          // Update progress after each successful upload
+          setUploadProgress(Math.round(((i + 1) / totalFiles) * 100));
+        } catch (uploadError) {
+          // Continue with next file even if this one fails
+          console.error(`Error uploading file ${i + 1}:`, uploadError);
+          toast.error(`Failed to upload ${file.name}`);
+        }
       }
       
       if (newUrls.length > 0) {
@@ -106,9 +92,13 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
       toast.error("Failed to upload images. Please try again.");
     } finally {
       setUploading(false);
-      setUploadProgress(0);
-      setCurrentFileIndex(0);
-      setTotalFilesToUpload(0);
+      setUploadProgress(100); // Ensure progress bar shows complete
+      setTimeout(() => {
+        setUploadProgress(0);
+        setCurrentFileIndex(0);
+        setTotalFilesToUpload(0);
+      }, 1000);
+      
       // Reset the input value so the same file can be selected again
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
