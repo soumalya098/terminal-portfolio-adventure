@@ -1,7 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { Upload, X, Image as ImageIcon, Check } from 'lucide-react';
-import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
@@ -31,14 +31,14 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
     setCurrentFileIndex(0);
     
     const newUrls: string[] = [];
-    const maxFileSizeMB = 5; // Maximum file size in MB
+    const maxFileSizeMB = 10; // Increased max file size to 10MB
 
     try {
       for (let i = 0; i < files.length; i++) {
         setCurrentFileIndex(i + 1);
         const file = files[i];
         
-        // Check file size
+        // Check file size but allow larger files
         if (file.size > maxFileSizeMB * 1024 * 1024) {
           toast.error(`File ${file.name} exceeds ${maxFileSizeMB}MB limit`);
           continue;
@@ -51,9 +51,12 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
         const storagePath = `project-images/${timestamp}_${fileId}_${cleanFileName}`;
         
         console.log(`Uploading file ${i + 1}/${files.length}: ${file.name} to ${storagePath}`);
+        console.log(`File type: ${file.type}, size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`);
         
-        // Use resumable upload with progress tracking
+        // Create storage reference for this file
         const storageRef = ref(storage, storagePath);
+        
+        // Use uploadBytesResumable for better control and progress tracking
         const uploadTask = uploadBytesResumable(storageRef, file);
         
         // Create a promise that resolves when the upload completes
@@ -71,13 +74,14 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
             },
             (error) => {
               console.error(`Error uploading file ${i + 1}:`, error);
+              console.error(`Error code: ${error.code}, message: ${error.message}`);
               reject(error);
             },
             async () => {
               try {
                 // Upload completed successfully, get download URL
                 const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-                console.log(`Got download URL for file ${i + 1}: ${downloadUrl.slice(0, 50)}...`);
+                console.log(`Got download URL for file ${i + 1}`);
                 newUrls.push(downloadUrl);
                 resolve();
               } catch (urlError) {
