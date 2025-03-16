@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Upload, X, Image as ImageIcon, Check } from 'lucide-react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
@@ -18,6 +18,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
   const [error, setError] = useState<string | null>(null);
   const [currentFileIndex, setCurrentFileIndex] = useState(0);
   const [totalFilesToUpload, setTotalFilesToUpload] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -44,30 +45,48 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
         }
         
         // Create a more distinct file identifier
-        const fileId = uuidv4();
-        const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+        const fileId = uuidv4().slice(0, 8);
+        const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_').slice(0, 30); // Limit filename length
         const timestamp = Date.now();
+        const storagePath = `project-images/${timestamp}_${fileId}_${cleanFileName}`;
         
-        // Create a reference with a more organized path structure
-        const storageRef = ref(storage, `project-images/${timestamp}_${fileId}_${cleanFileName}`);
+        console.log(`Uploading file ${i + 1}/${files.length}: ${file.name} to ${storagePath}`);
         
-        console.log(`Uploading file ${i + 1}/${files.length}: ${file.name}`);
+        // Use resumable upload with progress tracking
+        const storageRef = ref(storage, storagePath);
+        const uploadTask = uploadBytesResumable(storageRef, file);
         
-        // Upload the file with blob processing to optimize
-        const compressedBlob = await optimizeImageIfPossible(file);
-        await uploadBytes(storageRef, compressedBlob);
-        
-        console.log(`File uploaded, getting download URL`);
-        
-        // Get the download URL
-        const downloadUrl = await getDownloadURL(storageRef);
-        console.log(`Got download URL: ${downloadUrl}`);
-        
-        newUrls.push(downloadUrl);
-        
-        // Update progress
-        const progressPercentage = Math.round(((i + 1) / files.length) * 100);
-        setUploadProgress(progressPercentage);
+        // Create a promise that resolves when the upload completes
+        await new Promise<void>((resolve, reject) => {
+          uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+              // Track individual file progress
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(`File ${i + 1} progress: ${progress.toFixed(1)}%`);
+              
+              // Update overall progress (current file progress + completed files)
+              const overallProgress = ((i + (progress / 100)) / files.length) * 100;
+              setUploadProgress(Math.round(overallProgress));
+            },
+            (error) => {
+              console.error(`Error uploading file ${i + 1}:`, error);
+              reject(error);
+            },
+            async () => {
+              try {
+                // Upload completed successfully, get download URL
+                const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                console.log(`Got download URL for file ${i + 1}: ${downloadUrl.slice(0, 50)}...`);
+                newUrls.push(downloadUrl);
+                resolve();
+              } catch (urlError) {
+                console.error('Error getting download URL:', urlError);
+                reject(urlError);
+              }
+            }
+          );
+        });
       }
       
       if (newUrls.length > 0) {
@@ -87,71 +106,27 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
       setCurrentFileIndex(0);
       setTotalFilesToUpload(0);
       // Reset the input value so the same file can be selected again
-      e.target.value = '';
-    }
-  };
-
-  // Function to optimize image size if possible
-  const optimizeImageIfPossible = async (file: File): Promise<Blob> => {
-    // If it's not an image or is already small, return as is
-    if (!file.type.startsWith('image/') || file.size < 1024 * 1024) {
-      return file;
-    }
-
-    try {
-      // Basic optimization for images
-      return await new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
-          
-          // Set maximum dimensions
-          const MAX_WIDTH = 1920;
-          const MAX_HEIGHT = 1080;
-          
-          if (width > MAX_WIDTH) {
-            height = Math.round(height * (MAX_WIDTH / width));
-            width = MAX_WIDTH;
-          }
-          
-          if (height > MAX_HEIGHT) {
-            width = Math.round(width * (MAX_HEIGHT / height));
-            height = MAX_HEIGHT;
-          }
-          
-          canvas.width = width;
-          canvas.height = height;
-          
-          const ctx = canvas.getContext('2d');
-          ctx?.drawImage(img, 0, 0, width, height);
-          
-          // Get blob with reduced quality for JPG
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                resolve(blob);
-              } else {
-                resolve(file); // Fallback to original if optimization fails
-              }
-            },
-            file.type,
-            0.7 // Reduced quality for JPG
-          );
-        };
-        
-        img.onerror = () => resolve(file); // Fallback on error
-        img.src = URL.createObjectURL(file);
-      });
-    } catch (err) {
-      console.error('Image optimization failed:', err);
-      return file; // Fallback to original file
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
+  };
+
+  // Clean restart of the upload process
+  const cancelUpload = () => {
+    setUploading(false);
+    setUploadProgress(0);
+    setCurrentFileIndex(0);
+    setTotalFilesToUpload(0);
+    setError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    toast.info("Upload canceled");
   };
 
   return (
@@ -168,6 +143,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
             className="hidden"
             onChange={handleImageUpload}
             disabled={uploading}
+            ref={fileInputRef}
           />
         </label>
       </div>
@@ -176,7 +152,16 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
         <div className="space-y-2">
           <div className="flex justify-between text-xs text-white/70">
             <span>Uploading image {currentFileIndex} of {totalFilesToUpload}</span>
-            <span>{uploadProgress}%</span>
+            <span className="flex items-center gap-2">
+              {uploadProgress}%
+              <button 
+                onClick={cancelUpload} 
+                className="p-1 hover:bg-white/10 rounded-full"
+                title="Cancel upload"
+              >
+                <X size={14} />
+              </button>
+            </span>
           </div>
           <Progress value={uploadProgress} className="h-2 bg-white/10" />
         </div>

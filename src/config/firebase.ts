@@ -22,9 +22,5 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 
-// Enable better performance for storage operations
-const storageSettings = storage.settings;
-if (storageSettings) {
-  // If available, adjust performance settings
-  console.log("Firebase Storage initialized successfully");
-}
+// Log initialization
+console.log("Firebase Storage initialized successfully");
