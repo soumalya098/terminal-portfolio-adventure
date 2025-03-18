@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
                     href="mailto:example@portfolio.com" 
                     className="text-gray-300 hover:text-portfolio-accent transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-portfolio-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
                   >
-                    example@portfolio.com
+                    ambrose.linux+coder@gmail.com
                   </a>
                 </div>
               </div>
@@ -271,7 +271,7 @@ const Contact: React.FC = () => {
           <h2 className="text-2xl font-semibold text-white mb-6 text-center">Find Me Here</h2>
           <div className="aspect-video w-full bg-white/5 rounded-lg overflow-hidden relative">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100939.98555098464!2d-122.50764017946778!3d37.75781499156358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA%2C%20USA!5e0!3m2!1sen!2s!4v1659620651893!5m2!1sen!2s"
+              src="https://maps.app.goo.gl/o5W879DaRq6avEXq5"
               width="100%"
               height="100%"
               style={{ border: 0 }}
