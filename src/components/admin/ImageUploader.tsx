@@ -22,8 +22,13 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (!files || files.length === 0) return;
+    if (!files || files.length === 0) {
+      console.log("No files selected");
+      return;
+    }
 
+    console.log(`Selected ${files.length} files for upload`);
+    
     setUploading(true);
     setUploadProgress(0);
     setError(null);
@@ -31,96 +36,117 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ images, setImages }) => {
     setCurrentFileIndex(0);
     
     const newUrls: string[] = [];
-    const maxFileSizeMB = 15; // Increased max file size to 15MB
+    const maxFileSizeMB = 20; // Increased file size limit to 20MB
 
     try {
-      // Convert FileList to array for easier processing
       const fileArray = Array.from(files);
       const totalFiles = fileArray.length;
       
-      // Process files one at a time, but with direct upload instead of resumable
+      // Process files sequentially
       for (let i = 0; i < totalFiles; i++) {
-        setCurrentFileIndex(i + 1);
-        setUploadProgress(Math.round((i / totalFiles) * 100));
-        
         const file = fileArray[i];
+        setCurrentFileIndex(i + 1);
         
-        // Check file size but allow larger files
+        console.log(`Processing file ${i+1}/${totalFiles}: ${file.name}, size: ${(file.size / 1024 / 1024).toFixed(2)}MB, type: ${file.type}`);
+        
+        // Check file size
         if (file.size > maxFileSizeMB * 1024 * 1024) {
+          console.warn(`File ${file.name} exceeds ${maxFileSizeMB}MB limit`);
           toast.error(`File ${file.name} exceeds ${maxFileSizeMB}MB limit`);
           continue;
         }
         
-        // Create a more distinct file identifier
-        const fileId = uuidv4().slice(0, 8);
-        const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_').slice(0, 30);
-        const timestamp = Date.now();  
-            
-        // Using direct upload method instead of resume, which should optimize for speed
-        console.log(`Uploading file ${i + 1}/${totalFiles}: ${file.name}, size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`);
-         
-        // Create storage ref
-        const storageRef = ref(storage, `project-images/${timestamp}_${fileId}_${cleanFileName}`);
-          
-        // Direct upload with uploadBytes, for simplicity and speed
         try {
-          const uploadResult = await uploadBytes(storageRef, file);
-          const downloadUrl = await getDownloadURL(uploadResult.ref);
+          // Create a unique file name to avoid conflicts
+          const fileId = uuidv4().substring(0, 8);
+          const timestamp = Date.now();
+          const cleanFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_').substring(0, 20);
+          const storageFilePath = `project-images/${timestamp}_${fileId}_${cleanFileName}`;
           
-          console.log(`File ${i + 1} uploaded successfully`);
+          console.log(`Uploading file to path: ${storageFilePath}`);
+          
+          // Create storage ref
+          const storageRef = ref(storage, storageFilePath);
+          
+          // Direct upload with uploadBytes
+          console.log("Starting upload...");
+          const snapshot = await uploadBytes(storageRef, file);
+          console.log("Upload completed successfully, getting download URL");
+          
+          // Get the download URL
+          const downloadUrl = await getDownloadURL(snapshot.ref);
+          console.log(`Download URL obtained: ${downloadUrl.substring(0, 50)}...`);
+          
           newUrls.push(downloadUrl);
           
           // Update progress after each successful upload
-          setUploadProgress(Math.round(((i + 1) / totalFiles) * 100));
+          const progressValue = Math.round(((i + 1) / totalFiles) * 100);
+          console.log(`Setting progress to ${progressValue}%`);
+          setUploadProgress(progressValue);
+          
         } catch (uploadError) {
-          // Continue with next file even if this one fails
-          console.error(`Error uploading file ${i + 1}:`, uploadError);
-          toast.error(`Failed to upload ${file.name}`);
+          console.error("Error in file upload:", uploadError);
+          if (uploadError instanceof Error) {
+            toast.error(`Failed to upload ${file.name}: ${uploadError.message}`);
+          } else {
+            toast.error(`Failed to upload ${file.name}`);
+          }
         }
       }
       
+      // Successfully uploaded at least some images
       if (newUrls.length > 0) {
         console.log(`Successfully uploaded ${newUrls.length} images`);
         setImages([...images, ...newUrls]);
         toast.success(`${newUrls.length} image${newUrls.length > 1 ? 's' : ''} uploaded successfully`);
       } else {
-        toast.error("No images were uploaded");
+        console.warn("No images were successfully uploaded");
+        toast.error("No images were uploaded successfully");
       }
+      
     } catch (error) {
-      console.error("Error uploading images:", error);
+      console.error("Error in upload process:", error);
       setError(error instanceof Error ? error.message : "Unknown error occurred");
       toast.error("Failed to upload images. Please try again.");
     } finally {
+      console.log("Upload process finished");
       setUploading(false);
-      setUploadProgress(100); // Ensure progress bar shows complete
+      setUploadProgress(100); // Set to 100% when done
+      
+      // Reset the input value
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      
+      // Reset progress indicator after a delay
       setTimeout(() => {
         setUploadProgress(0);
         setCurrentFileIndex(0);
         setTotalFilesToUpload(0);
-      }, 1000);
-      
-      // Reset the input value so the same file can be selected again
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+      }, 1500);
     }
   };
 
-  const removeImage = (index: number) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
-
-  // Clean restart of the upload process
+  // Reset function to use when canceling an upload
   const cancelUpload = () => {
+    console.log("Upload canceled by user");
     setUploading(false);
     setUploadProgress(0);
     setCurrentFileIndex(0);
     setTotalFilesToUpload(0);
     setError(null);
+    
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    
     toast.info("Upload canceled");
+  };
+
+  const removeImage = (index: number) => {
+    console.log(`Removing image at index ${index}`);
+    setImages(images.filter((_, i) => i !== index));
+    toast.info("Image removed");
   };
 
   return (

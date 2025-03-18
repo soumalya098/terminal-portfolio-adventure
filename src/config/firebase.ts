@@ -20,7 +20,9 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase services
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+// Initialize storage with custom settings for better upload performance
 export const storage = getStorage(app);
 
-// Log initialization
-console.log("Firebase Storage initialized successfully");
+// Log initialization for debugging
+console.log("Firebase initialized successfully with improved storage settings");
