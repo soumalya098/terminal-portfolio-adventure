@@ -29,8 +29,6 @@ const Skills: React.FC = () => {
       icon: <Server className="w-6 h-6" />,
       skills: [
         { name: 'Python', level: 85 },
-        { name: 'Node.js', level: 60 },
-        { name: 'REST API', level: 70 },
       ],
     },
     {
@@ -106,7 +104,7 @@ const Skills: React.FC = () => {
           <div className="relative border-l-2 border-portfolio-accent/50 pl-8 pb-8 ml-4">
             {/* Timeline Items */}
             <TimelineItem 
-              year="2022 - Present"
+              year="2023 - Present"
               title="Learning Coding"
               company="Self-taught"
               description="Learning various programming languages including HTML, CSS, JavaScript, and Python. Working on personal projects to improve skills."
