@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ExternalLink, Github, Code, Package, Image as ImageIcon } from 'lucide-react';
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from '../config/firebase';
@@ -23,71 +25,8 @@ const Projects: React.FC = () => {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
   
-  // Default projects
-  const defaultProjects: Project[] = [
-    {
-      id: 1,
-      title: "E-commerce Platform",
-      description: "A full-featured e-commerce platform with product management, cart functionality, user authentication, and payment processing.",
-      image: "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1380&q=80",
-      technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe API"],
-      features: ["User authentication", "Shopping cart", "Payment processing", "Order history", "Admin dashboard"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      technologies: ["React", "TypeScript", "Firebase", "Tailwind CSS"],
-      features: ["Drag-and-drop task management", "Team collaboration", "Real-time updates", "Task filtering", "Notifications"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com",
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Portfolio Website",
-      description: "A personal portfolio website with an interactive terminal landing page, showcasing projects, skills, and contact information.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80",
-      technologies: ["React", "TypeScript", "Tailwind CSS"],
-      features: ["Interactive terminal", "Project showcase", "Responsive design", "Animations", "Contact form"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 4,
-      title: "Weather Dashboard",
-      description: "A weather application with detailed forecasts, location search, and interactive maps showing real-time weather data.",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80",
-      technologies: ["React", "Weather API", "Mapbox", "CSS Modules"],
-      features: ["5-day forecast", "Location search", "Interactive maps", "Weather alerts", "Favorite locations"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 5,
-      title: "Blog Platform",
-      description: "A full-featured blog platform with markdown support, comments, user profiles, and a custom content management system.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80",
-      technologies: ["Next.js", "PostgreSQL", "Prisma", "NextAuth"],
-      features: ["Markdown editor", "User authentication", "Comments", "Categories and tags", "SEO optimization"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    },
-    {
-      id: 6,
-      title: "Fitness Tracker",
-      description: "A fitness tracking application that helps users track workouts, set goals, and monitor progress with visualizations.",
-      image: "https://images.unsplash.com/photo-1434682881908-b43d0467b798?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80",
-      technologies: ["React Native", "Firebase", "Chart.js", "Expo"],
-      features: ["Workout tracking", "Progress charts", "Goal setting", "Exercise library", "Workout plans"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com"
-    }
-  ];
+  // Empty default projects array
+  const defaultProjects: Project[] = [];
 
   // Load projects from Firebase
   useEffect(() => {
@@ -165,7 +104,7 @@ const Projects: React.FC = () => {
         ) : (
           <>
             {/* Featured Projects */}
-            {featuredProjects.length > 0 && (
+            {featuredProjects.length > 0 ? (
               <div>
                 <h2 className="text-2xl font-semibold text-white mb-6 border-l-4 border-portfolio-accent pl-3 animate-fade-in">
                   Featured Projects
@@ -231,75 +170,92 @@ const Projects: React.FC = () => {
                   ))}
                 </div>
               </div>
-            )}
+            ) : null}
 
             {/* Other Projects */}
-            <h2 className="text-2xl font-semibold text-white mb-6 border-l-4 border-portfolio-accent pl-3 animate-fade-in">
-              All Projects
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regularProjects.map((project, index) => (
-                <div 
-                  key={project.id} 
-                  className="project-card transform transition-all duration-500 hover:scale-[1.03] animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="h-48 overflow-hidden rounded-lg mb-4">
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                    />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
-                  <p className="text-white/70 text-sm mb-3 line-clamp-2">{project.description}</p>
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                      <span key={techIndex} className="skill-badge text-xs px-2 py-0.5 transition-all duration-300 hover:bg-white/10">
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="skill-badge text-xs px-2 py-0.5">
-                        +{project.technologies.length - 3}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <button 
-                      onClick={() => openProjectDetails(project)}
-                      className="text-sm text-portfolio-secondary hover:text-portfolio-accent transition-colors"
+            {regularProjects.length > 0 ? (
+              <>
+                <h2 className="text-2xl font-semibold text-white mb-6 border-l-4 border-portfolio-accent pl-3 animate-fade-in">
+                  All Projects
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {regularProjects.map((project, index) => (
+                    <div 
+                      key={project.id} 
+                      className="project-card transform transition-all duration-500 hover:scale-[1.03] animate-fade-in"
+                      style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      View Details
-                    </button>
-                    <div className="flex gap-2">
-                      {project.liveUrl && (
-                        <a 
-                          href={project.liveUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="p-1.5 glass rounded-full hover:bg-white/10 transition-colors transform hover:scale-110 duration-300"
-                          title="Live Demo"
+                      <div className="h-48 overflow-hidden rounded-lg mb-4">
+                        <img 
+                          src={project.image} 
+                          alt={project.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                        />
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
+                      <p className="text-white/70 text-sm mb-3 line-clamp-2">{project.description}</p>
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                          <span key={techIndex} className="skill-badge text-xs px-2 py-0.5 transition-all duration-300 hover:bg-white/10">
+                            {tech}
+                          </span>
+                        ))}
+                        {project.technologies.length > 3 && (
+                          <span className="skill-badge text-xs px-2 py-0.5">
+                            +{project.technologies.length - 3}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <button 
+                          onClick={() => openProjectDetails(project)}
+                          className="text-sm text-portfolio-secondary hover:text-portfolio-accent transition-colors"
                         >
-                          <ExternalLink className="w-3.5 h-3.5 text-white" />
-                        </a>
-                      )}
-                      {project.githubUrl && (
-                        <a 
-                          href={project.githubUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="p-1.5 glass rounded-full hover:bg-white/10 transition-colors transform hover:scale-110 duration-300"
-                          title="GitHub Repository"
-                        >
-                          <Github className="w-3.5 h-3.5 text-white" />
-                        </a>
-                      )}
+                          View Details
+                        </button>
+                        <div className="flex gap-2">
+                          {project.liveUrl && (
+                            <a 
+                              href={project.liveUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="p-1.5 glass rounded-full hover:bg-white/10 transition-colors transform hover:scale-110 duration-300"
+                              title="Live Demo"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5 text-white" />
+                            </a>
+                          )}
+                          {project.githubUrl && (
+                            <a 
+                              href={project.githubUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="p-1.5 glass rounded-full hover:bg-white/10 transition-colors transform hover:scale-110 duration-300"
+                              title="GitHub Repository"
+                            >
+                              <Github className="w-3.5 h-3.5 text-white" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            ) : (
+              <div className="glass p-10 text-center animate-fade-in">
+                <h2 className="text-2xl font-semibold text-white mb-4">No Projects Yet</h2>
+                <p className="text-white/70 mb-6">
+                  I'm currently working on adding projects to my portfolio.
+                  Check back soon to see what I've been building!
+                </p>
+                <div className="flex justify-center">
+                  <Link to="/contact" className="button-primary transform transition hover:scale-105 duration-300 flex items-center gap-2">
+                    Let's Connect <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </div>
+            )}
           </>
         )}
 
