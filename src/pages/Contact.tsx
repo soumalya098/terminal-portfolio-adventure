@@ -112,7 +112,7 @@ const Contact: React.FC = () => {
                     href="tel:+11234567890" 
                     className="text-gray-300 hover:text-portfolio-accent transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-portfolio-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
                   >
-                    +1 (123) 456-7890
+                    +91 **********
                   </a>
                 </div>
               </div>
@@ -124,7 +124,7 @@ const Contact: React.FC = () => {
                 <div>
                   <h3 className="text-lg font-medium text-white mb-1">Location</h3>
                   <p className="text-gray-300">
-                    San Francisco, California, USA
+                    India
                   </p>
                 </div>
               </div>
@@ -137,7 +137,7 @@ const Contact: React.FC = () => {
               </h3>
               <div className="flex gap-4">
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/pyl1nx" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6"
@@ -145,7 +145,7 @@ const Contact: React.FC = () => {
                   <Github className="w-5 h-5 text-white" />
                 </a>
                 <a 
-                  href="https://linkedin.com" 
+                  href="https://linkedin.com/pyl1nx" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6"
@@ -153,7 +153,7 @@ const Contact: React.FC = () => {
                   <Linkedin className="w-5 h-5 text-white" />
                 </a>
                 <a 
-                  href="https://twitter.com" 
+                  href="https://x.com/pyl1nx" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-3 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6"
