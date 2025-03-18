@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
@@ -36,7 +35,7 @@ const CommandLine: React.FC = () => {
                                          
 `}
             </pre>
-            <p>Welcome to my interactive terminal portfolio!</p>
+            <p>Welcome to Ambrose's interactive terminal portfolio!</p>
             <p>Type <span className="text-terminal-command">/help</span> to see available commands.</p>
           </div>
         ),
@@ -137,8 +136,8 @@ const CommandLine: React.FC = () => {
       response = (
         <div>
           <p className="font-semibold text-portfolio-accent">About Me:</p>
-          <p>Full-stack developer with expertise in modern web technologies.</p>
-          <p>Passionate about creating elegant, efficient solutions to complex problems.</p>
+          <p>Coding enthusiast with 2 years of learning experience.</p>
+          <p>Focused on HTML, CSS, JavaScript, and Python development.</p>
           <p className="mt-2">Type <span className="text-terminal-command">/start</span> to see my full portfolio.</p>
         </div>
       );
@@ -150,28 +149,23 @@ const CommandLine: React.FC = () => {
             <div>
               <p className="text-portfolio-secondary">Frontend:</p>
               <ul className="list-disc pl-5 text-sm">
-                <li>React.js</li>
-                <li>TypeScript</li>
-                <li>Next.js</li>
-                <li>Tailwind CSS</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
               </ul>
             </div>
             <div>
               <p className="text-portfolio-secondary">Backend:</p>
               <ul className="list-disc pl-5 text-sm">
-                <li>Node.js</li>
-                <li>Express</li>
-                <li>PostgreSQL</li>
-                <li>MongoDB</li>
+                <li>Python</li>
               </ul>
             </div>
             <div className="col-span-2 sm:col-span-1 mt-2 sm:mt-0">
-              <p className="text-portfolio-secondary">Other:</p>
+              <p className="text-portfolio-secondary">Tools:</p>
               <ul className="list-disc pl-5 text-sm">
-                <li>CI/CD</li>
-                <li>Docker</li>
                 <li>Git/GitHub</li>
-                <li>AWS</li>
+                <li>VS Code</li>
+                <li>Linux</li>
               </ul>
             </div>
           </div>
@@ -182,12 +176,8 @@ const CommandLine: React.FC = () => {
       response = (
         <div>
           <p className="font-semibold text-portfolio-accent">Project Highlights:</p>
-          <ul className="list-disc pl-5 mt-2">
-            <li><span className="text-portfolio-secondary">E-commerce Platform</span> - React, Node.js, MongoDB</li>
-            <li><span className="text-portfolio-secondary">Portfolio Website</span> - React, TypeScript, Tailwind CSS</li>
-            <li><span className="text-portfolio-secondary">Task Management App</span> - Next.js, PostgreSQL</li>
-          </ul>
-          <p className="mt-2">Type <span className="text-terminal-command">/start</span> to see detailed project information.</p>
+          <p className="mt-2">Currently working on building my project portfolio.</p>
+          <p className="mt-2">Type <span className="text-terminal-command">/start</span> to see my full portfolio.</p>
         </div>
       );
     } else if (command === '/contact') {
@@ -195,9 +185,10 @@ const CommandLine: React.FC = () => {
         <div>
           <p className="font-semibold text-portfolio-accent">Contact Information:</p>
           <ul className="list-none pl-0 mt-2 space-y-1">
-            <li>📧 Email: example@portfolio.com</li>
-            <li>🌐 GitHub: github.com/username</li>
-            <li>🔗 LinkedIn: linkedin.com/in/username</li>
+            <li>📧 Email: Ambrose.linux+coder@gmail.com</li>
+            <li>🌐 GitHub: github.com/pyL1nx</li>
+            <li>🔗 LinkedIn: linkedin.com/in/pyL1nx</li>
+            <li>🐦 X: x.com/pyL1nx</li>
           </ul>
           <p className="mt-2">Type <span className="text-terminal-command">/start</span> to visit my contact page.</p>
         </div>

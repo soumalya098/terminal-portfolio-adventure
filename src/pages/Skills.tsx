@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Code, Server, Database, Globe, Layout, Terminal } from 'lucide-react';
 
@@ -19,51 +18,43 @@ const Skills: React.FC = () => {
       title: 'Frontend',
       icon: <Layout className="w-6 h-6" />,
       skills: [
-        { name: 'React.js', level: 90 },
-        { name: 'TypeScript', level: 85 },
-        { name: 'Next.js', level: 80 },
-        { name: 'HTML/CSS', level: 95 },
-        { name: 'Tailwind CSS', level: 90 },
+        { name: 'HTML', level: 85 },
+        { name: 'CSS', level: 80 },
+        { name: 'JavaScript', level: 75 },
+        { name: 'React.js', level: 65 },
       ],
     },
     {
       title: 'Backend',
       icon: <Server className="w-6 h-6" />,
       skills: [
-        { name: 'Node.js', level: 85 },
-        { name: 'Express', level: 85 },
-        { name: 'NestJS', level: 75 },
-        { name: 'REST API', level: 90 },
-        { name: 'GraphQL', level: 80 },
+        { name: 'Python', level: 85 },
+        { name: 'Node.js', level: 60 },
+        { name: 'REST API', level: 70 },
       ],
     },
     {
       title: 'Database',
       icon: <Database className="w-6 h-6" />,
       skills: [
-        { name: 'PostgreSQL', level: 85 },
-        { name: 'MongoDB', level: 80 },
-        { name: 'Redis', level: 70 },
-        { name: 'Prisma', level: 75 },
-        { name: 'SQL', level: 85 },
+        { name: 'SQL', level: 75 },
+        { name: 'MongoDB', level: 65 },
       ],
     },
     {
-      title: 'DevOps',
+      title: 'Tools',
       icon: <Terminal className="w-6 h-6" />,
       skills: [
-        { name: 'Docker', level: 80 },
-        { name: 'CI/CD', level: 75 },
-        { name: 'AWS', level: 70 },
-        { name: 'Git/GitHub', level: 90 },
+        { name: 'Git/GitHub', level: 80 },
+        { name: 'VS Code', level: 85 },
         { name: 'Linux', level: 80 },
       ],
     },
   ];
 
-  const languages = ['JavaScript', 'TypeScript', 'Python', 'HTML', 'CSS', 'SQL'];
-  const tools = ['VS Code', 'Git', 'Docker', 'Figma', 'Postman', 'Chrome DevTools'];
-  const other = ['Agile/Scrum', 'RESTful APIs', 'GraphQL', 'Responsive Design', 'Performance Optimization', 'SEO'];
+  const languages = ['HTML', 'CSS', 'JavaScript', 'Python'];
+  const tools = ['VS Code', 'Git', 'Linux', 'Chrome DevTools'];
+  const other = ['Responsive Design', 'Problem Solving', 'Self-Learning', 'Version Control'];
   
   return (
     <div className="min-h-screen py-20">
@@ -115,31 +106,10 @@ const Skills: React.FC = () => {
           <div className="relative border-l-2 border-portfolio-accent/50 pl-8 pb-8 ml-4">
             {/* Timeline Items */}
             <TimelineItem 
-              year="2021 - Present"
-              title="Senior Web Developer"
-              company="Tech Innovations Inc."
-              description="Leading development of enterprise web applications using React, Node.js, and AWS. Mentoring junior developers and implementing CI/CD workflows."
-            />
-            
-            <TimelineItem 
-              year="2018 - 2021"
-              title="Full Stack Developer"
-              company="Digital Solutions LLC"
-              description="Developed and maintained multiple client websites and web applications. Worked with React, Express, and MongoDB."
-            />
-            
-            <TimelineItem 
-              year="2016 - 2018"
-              title="Frontend Developer"
-              company="Web Creations Co."
-              description="Created responsive layouts and interactive UIs for client websites. Utilized HTML, CSS, JavaScript, and jQuery."
-            />
-            
-            <TimelineItem 
-              year="2014 - 2016"
-              title="Bachelor's Degree, Computer Science"
-              company="University of Technology"
-              description="Focused on web development, algorithms, and software engineering principles. Graduated with honors."
+              year="2022 - Present"
+              title="Learning Coding"
+              company="Self-taught"
+              description="Learning various programming languages including HTML, CSS, JavaScript, and Python. Working on personal projects to improve skills."
               isLast
             />
           </div>

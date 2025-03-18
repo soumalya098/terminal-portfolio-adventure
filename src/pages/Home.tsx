@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
@@ -44,29 +43,29 @@ const Home: React.FC = () => {
               <div className="space-y-3">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
                   Hi, I'm <span className="heading-gradient font-bold relative inline-block">
-                    John Doe
+                    Ambrose
                     <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-portfolio-secondary to-portfolio-accent transform scale-x-0 transition-transform duration-700 ease-in-out origin-left group-hover:scale-x-100"></span>
                   </span>
                 </h1>
                 <h2 className="text-xl sm:text-2xl font-semibold text-white">
-                  Full-stack Developer
+                  Coding Enthusiast
                 </h2>
                 <p className="text-gray-300 text-base sm:text-lg max-w-md">
-                  I build modern, responsive web applications using cutting-edge technologies.
+                  Learning to build modern, responsive web applications using HTML, CSS, JavaScript and Python.
                   Focused on creating clean, efficient, and user-friendly experiences.
                 </p>
               </div>
               
               <div className="flex space-x-4 pt-2">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+                <a href="https://github.com/pyL1nx" target="_blank" rel="noopener noreferrer" 
                   className="p-2 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6">
                   <Github className="text-white h-5 w-5" />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" 
+                <a href="https://linkedin.com/in/pyL1nx" target="_blank" rel="noopener noreferrer" 
                   className="p-2 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6">
                   <Linkedin className="text-white h-5 w-5" />
                 </a>
-                <a href="mailto:example@email.com" 
+                <a href="mailto:Ambrose.linux+coder@gmail.com" 
                   className="p-2 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6">
                   <Mail className="text-white h-5 w-5" />
                 </a>
@@ -111,21 +110,19 @@ const Home: React.FC = () => {
           <div className="glass p-8 sm:p-10 max-w-4xl mx-auto animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-700 hover:shadow-[0_5px_30px_rgba(157,70,255,0.2)]">
             <div className="space-y-6">
               <p className="text-gray-300 leading-relaxed">
-                I'm a passionate web developer with over 5 years of experience creating dynamic 
-                and responsive applications. My journey in web development began with curiosity 
-                and has evolved into expertise across the full stack.
+                I'm Ambrose, a coding enthusiast who's been learning programming for about two years. 
+                My journey in coding began with curiosity and has evolved into a passion for building 
+                web applications and solving problems through code.
               </p>
               
               <p className="text-gray-300 leading-relaxed">
-                I specialize in React, TypeScript, Node.js, and modern frontend frameworks. 
-                I'm constantly learning and exploring new technologies to improve my skills 
-                and create better digital experiences.
+                I'm proficient in HTML, CSS, JavaScript, and Python. I enjoy learning new technologies 
+                and frameworks to expand my skills and create better digital experiences.
               </p>
               
               <p className="text-gray-300 leading-relaxed">
-                When I'm not coding, I enjoy hiking, photography, and contributing to open-source 
-                projects. I believe in writing clean, maintainable code and solving complex problems 
-                with simple, elegant solutions.
+                When I'm not coding, I enjoy exploring new technologies, contributing to open-source 
+                projects, and continuously learning to improve my programming skills.
               </p>
             </div>
             
@@ -134,11 +131,11 @@ const Home: React.FC = () => {
               <div className="glass bg-black/20 p-5 rounded-md space-y-3 transform transition-all duration-500 hover:translate-x-2">
                 <p className="text-gray-300 flex items-start">
                   <span className="text-portfolio-accent mr-2">→</span> 
-                  <span>An AI-powered content management system with advanced analytics</span>
+                  <span>Personal web development projects to practice HTML, CSS and JavaScript</span>
                 </p>
                 <p className="text-gray-300 flex items-start">
                   <span className="text-portfolio-accent mr-2">→</span> 
-                  <span>Learning Rust for backend performance optimization and WebAssembly integration</span>
+                  <span>Learning more about Python for automation and data analysis</span>
                 </p>
               </div>
             </div>
@@ -158,31 +155,30 @@ const Home: React.FC = () => {
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="glass p-6 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">Frontend</h3>
-              <p className="text-gray-300 mb-4">Building beautiful, responsive UIs with modern frameworks</p>
+              <p className="text-gray-300 mb-4">Building responsive websites with modern web technologies</p>
               <div className="flex flex-wrap gap-2">
-                <span className="skill-badge">React</span>
-                <span className="skill-badge">TypeScript</span>
-                <span className="skill-badge">Tailwind CSS</span>
+                <span className="skill-badge">HTML</span>
+                <span className="skill-badge">CSS</span>
+                <span className="skill-badge">JavaScript</span>
               </div>
             </div>
             
             <div className="glass p-6 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
               <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">Backend</h3>
-              <p className="text-gray-300 mb-4">Creating robust APIs and server-side applications</p>
+              <p className="text-gray-300 mb-4">Learning to create server-side applications</p>
               <div className="flex flex-wrap gap-2">
-                <span className="skill-badge">Node.js</span>
-                <span className="skill-badge">Express</span>
-                <span className="skill-badge">Firebase</span>
+                <span className="skill-badge">Python</span>
+                <span className="skill-badge">Basic APIs</span>
               </div>
             </div>
             
             <div className="glass p-6 animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-500 hover:scale-105 hover:shadow-[0_5px_20px_rgba(157,70,255,0.15)]">
-              <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">DevOps</h3>
-              <p className="text-gray-300 mb-4">Deploying and maintaining applications in the cloud</p>
+              <h3 className="text-xl font-semibold text-portfolio-secondary mb-3">Tools</h3>
+              <p className="text-gray-300 mb-4">Using development tools to improve workflow</p>
               <div className="flex flex-wrap gap-2">
-                <span className="skill-badge">Docker</span>
-                <span className="skill-badge">CI/CD</span>
-                <span className="skill-badge">AWS</span>
+                <span className="skill-badge">Git</span>
+                <span className="skill-badge">Linux</span>
+                <span className="skill-badge">VS Code</span>
               </div>
             </div>
           </div>
