@@ -271,7 +271,7 @@ const Contact: React.FC = () => {
           <h2 className="text-2xl font-semibold text-white mb-6 text-center">Find Me Here</h2>
           <div className="aspect-video w-full bg-white/5 rounded-lg overflow-hidden relative">
             <iframe
-              src="https://maps.app.goo.gl/o5W879DaRq6avEXq5"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d937067.5621986693!2d86.75667923030577!3d23.20317100925225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f84b44e09f0285%3A0x7f7f67f0efb4dede!2sWest%20Bengal!5e0!3m2!1sen!2sin!4v1710762590320!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style={{ border: 0 }}
