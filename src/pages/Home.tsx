@@ -85,7 +85,7 @@ const Home: React.FC = () => {
             <div className="md:w-1/2 flex justify-center md:justify-end">
               <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-portfolio-accent/50 shadow-[0_0_25px_rgba(157,70,255,0.3)] transition-all duration-500 hover:shadow-[0_0_35px_rgba(157,70,255,0.5)] hover:scale-105">
                 <img
-                  src="https://media-hosting.imagekit.io//08d03b78a4e348f1/1000114529.jpg?Expires=1836907835&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=nndIsHnsXC561V6UPLfXaqp-BIAfklcfqIWoKj3ITkyJ-~7wKc~Kyxw28lRK5ICIM6Cax4kgZEaPXd-X5IoSiZqn1Xyr1zpXnTkUBOwn7dc~ZSRyJwaRLOlz5wN44R5fzEIRYgNc4YcGI63p49JU~ou8U23PKJ9dzE5UjMwNT99eJwi5WgP~oKTWy6VCSQEzbGjCnzI0rDixkQGLsPydCqeT0fLnJ3QJpwb23nRxk5npwqteTSrPhxGGNjiRSSCnDIU6chIOF8-Win~QRPMh3N1SPZ7cQ0OtXDyDMrWq00Z-j0GSuyakcxlumnRPk2S7K1oj5vk-1W4OuSqAG~kdLQ__"
+                  src="https://i.postimg.cc/63s1hfnT/IMG-20250516-WA0006.jpg"
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
