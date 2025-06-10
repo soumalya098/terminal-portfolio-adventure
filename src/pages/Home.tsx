@@ -62,10 +62,6 @@ const Home: React.FC = () => {
                   className="p-2 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6">
                   <Github className="text-white h-5 w-5" />
                 </a>
-                <a href="https://linkedin.com/in/pyL1nx" target="_blank" rel="noopener noreferrer" 
-                  className="p-2 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6">
-                  <Linkedin className="text-white h-5 w-5" />
-                </a>
                 <a href="mailto:Ambrose.linux+coder@gmail.com" 
                   className="p-2 glass rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-110 hover:rotate-6">
                   <Mail className="text-white h-5 w-5" />
@@ -85,7 +81,7 @@ const Home: React.FC = () => {
             <div className="md:w-1/2 flex justify-center md:justify-end">
               <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-portfolio-accent/50 shadow-[0_0_25px_rgba(157,70,255,0.3)] transition-all duration-500 hover:shadow-[0_0_35px_rgba(157,70,255,0.5)] hover:scale-105">
                 <img
-                  src="https://i.postimg.cc/63s1hfnT/IMG-20250516-WA0006.jpg"
+                  src="https://ik.imagekit.io/ru2ogjwqt/pexels-eberhardgross-1367192%20(1).jpg?updatedAt=1749567976019"
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
@@ -111,7 +107,7 @@ const Home: React.FC = () => {
           <div className="glass p-8 sm:p-10 max-w-4xl mx-auto animate-on-scroll visible opacity-100 transition-opacity duration-700 transform transition-all duration-700 hover:shadow-[0_5px_30px_rgba(157,70,255,0.2)]">
             <div className="space-y-6">
               <p className="text-gray-300 leading-relaxed">
-                I'm Ambrose, a coding enthusiast who's been learning programming for about two years. 
+                I'm Soumalya, a coding enthusiast who's been learning programming for about two years. 
                 My journey in coding began with curiosity and has evolved into a passion for building 
                 web applications and solving problems through code.
               </p>
