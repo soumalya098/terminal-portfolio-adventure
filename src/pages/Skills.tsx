@@ -15,28 +15,10 @@ type SkillCategory = {
 const Skills: React.FC = () => {
   const skillCategories: SkillCategory[] = [
     {
-      title: 'Frontend',
+      title: 'Coding language',
       icon: <Layout className="w-6 h-6" />,
       skills: [
-        { name: 'HTML', level: 85 },
-        { name: 'CSS', level: 80 },
-        { name: 'JavaScript', level: 75 },
-        { name: 'React.js', level: 65 },
-      ],
-    },
-    {
-      title: 'Backend',
-      icon: <Server className="w-6 h-6" />,
-      skills: [
         { name: 'Python', level: 85 },
-      ],
-    },
-    {
-      title: 'Database',
-      icon: <Database className="w-6 h-6" />,
-      skills: [
-        { name: 'SQL', level: 75 },
-        { name: 'MongoDB', level: 65 },
       ],
     },
     {
@@ -45,14 +27,13 @@ const Skills: React.FC = () => {
       skills: [
         { name: 'Git/GitHub', level: 80 },
         { name: 'VS Code', level: 85 },
-        { name: 'Linux', level: 80 },
       ],
     },
   ];
 
-  const languages = ['HTML', 'CSS', 'JavaScript', 'Python'];
-  const tools = ['VS Code', 'Git', 'Linux', 'Chrome DevTools'];
-  const other = ['Responsive Design', 'Problem Solving', 'Self-Learning', 'Version Control'];
+  const languages = ['Python'];
+  const tools = ['VS Code', 'Github'];
+  const other = ['Problem Solving', 'Self-Learning'];
   
   return (
     <div className="min-h-screen py-20">
@@ -104,10 +85,10 @@ const Skills: React.FC = () => {
           <div className="relative border-l-2 border-portfolio-accent/50 pl-8 pb-8 ml-4">
             {/* Timeline Items */}
             <TimelineItem 
-              year="2023 - Present"
+              year="2025 - Present"
               title="Learning Coding"
               company="Self-taught"
-              description="Learning various programming languages including HTML, CSS, JavaScript, and Python. Working on personal projects to improve skills."
+              description="Learning Python. Working on personal projects to improve skills."
               isLast
             />
           </div>
